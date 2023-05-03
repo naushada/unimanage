@@ -1,0 +1,14 @@
+
+<div class="content-container">
+  <app-dashboard *ngIf="menuItemSelected === 'dashboard'"></app-dashboard>
+  <app-reports *ngIf="menuItemSelected === 'reports'"></app-reports>
+  <app-sidebar class="sidenav" *ngIf="menuItemSelected === 'devices'"></app-sidebar>
+
+  <div class="content-area">
+    <ng-container *ngIf="menuItemSelected === 'devices'">
+      <app-localui *ngIf="devicesItemSelected === 'localui'"></app-localui>
+      <app-console *ngIf="devicesItemSelected === 'console'"></app-console>
+    </ng-container>
+  </div>
+    
+</div>  

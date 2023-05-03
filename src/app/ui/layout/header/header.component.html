@@ -1,0 +1,52 @@
+
+<header class="header-1">
+    <div class="branding">
+      <a class="nav-link">
+        <!--
+        <clr-icon shape="shield"></clr-icon>
+        <span class="title">Angular CLI</span>-->
+        <img src="assets/SW-A-Semtech-Company-LOGO_White-Rad.svg"  width="100px" />
+      </a>
+    </div>
+    <!--
+    <div class="header-nav">
+      <a class="active nav-link nav-icon">
+        <clr-icon shape="home"></clr-icon>
+      </a>
+      <a class=" nav-link nav-icon">
+        <clr-icon shape="cog"></clr-icon>
+      </a>
+    </div>
+    <form class="search">
+      <label for="search_input">
+        <input id="search_input" type="text" placeholder="Search for keywords...">
+      </label>
+    </form>
+    <div class="header-actions">
+      <clr-dropdown class="dropdown bottom-right">
+        <button class="nav-icon" clrDropdownToggle>
+          <clr-icon shape="user"></clr-icon>
+          <clr-icon shape="caret down"></clr-icon>
+        </button>
+        <div class="dropdown-menu">
+          <a clrDropdownItem>About</a>
+          <a clrDropdownItem>Preferences</a>
+          <a clrDropdownItem>Log out</a>
+        </div>
+      </clr-dropdown>
+    </div>
+    -->
+  </header>
+  <nav class="subnav">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="whichSubnavIsSelected[0] === true" style="cursor: pointer" (click)="onDashboardClick(0)">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" [class.active]="whichSubnavIsSelected[1] === true" style="cursor: pointer" (click)="onDevicesClick(1)">Devices</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="whichSubnavIsSelected[2] === true" style="cursor: pointer" (click)="onReportsClick(2)">Reports</a>
+      </li>
+    </ul>
+  </nav> 

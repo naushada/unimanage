@@ -1,0 +1,15 @@
+<clr-vertical-nav [clrVerticalNavCollapsible]="true" *ngIf="DeviceSerialNoMap.size > 0">
+  <clr-vertical-nav-group routerLinkActive="active" *ngFor="let device of DeviceSerialNoMap | keyvalue; index as idx">
+      <a routerLink="./normal" hidden aria-hidden="true"></a>
+      <clr-icon shape="router" clrVerticalNavIcon></clr-icon>
+      {{device.value.deviceName}}({{device.key}})
+      <clr-vertical-nav-group-children *clrIfExpanded="true" style="cursor: pointer">
+          <a clrVerticalNavLink [class.active] = "isDeviceUiLinkSelected[idx]"  (click)="onDeviceUiClick(device.key, idx)">
+              Device UI ({{device.value.ipAddress}})
+          </a>
+          <a clrVerticalNavLink [class.active] = "isDeviceConsoleLinkSelected[idx]"  (click)="onDeviceConsoleClick(device.key, idx)">
+              Device Console ({{idx}})
+          </a>
+      </clr-vertical-nav-group-children>
+  </clr-vertical-nav-group>
+</clr-vertical-nav>

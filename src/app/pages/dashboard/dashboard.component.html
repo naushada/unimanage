@@ -1,0 +1,25 @@
+<div class="clr-row" style="margin-left: 10px;">
+    <div class="clr-col-3" *ngFor="let device of devices">
+        <div class="card" >
+            <h3 class="card-header">{{device.deviceName}} ({{device.serialNumber}})</h3>
+            <div class="card-block">
+                <div class="card-media-block">
+                    <img src="assets/1342082-200.png" class="card-media-image" />
+                    <div class="card-media-description">
+                        <span class="card-media-title"> {{device.ipAddress}} </span>
+                        <span class="card-media-text"> {{device.serialNumber}} </span>
+                    </div>
+                </div>
+                <div class="card-text">
+                    <span> {{device.deviceName}} </span>
+                    <span> {{device.ipAddress}} </span>
+                    <span> {{device.serialNumber}} </span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm btn-link">For Details</button>
+            </div>
+        </div>
+    </div>
+</div>
+
