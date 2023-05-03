@@ -27,7 +27,7 @@ export class HttpService {
   constructor(private http: HttpClient) {
 
     if(!environment.production) {
-      this.apiURL = "http://localhost:58989"; 
+      this.apiURL = "http://192.168.0.140:58989"; 
     }
    }
   
@@ -60,5 +60,13 @@ export class HttpService {
 
   getDevices(): Observable<Array<Device>> {
     return this.http.get<Array<Device>>(this.getUri("from_web_devices"), this.httpOptions);
+  }
+
+  redirectToLocalUI(ipAddress: string, port:number = 443) : Observable<string> {
+    let param = `ipAddress=${ipAddress}&port=${port}`;
+
+    const options = {params: new HttpParams({fromString: param}),
+                     headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    return this.http.get<string>(this.getUri("from_web_device_ui"), options);
   }
 }

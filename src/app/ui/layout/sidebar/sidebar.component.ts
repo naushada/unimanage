@@ -51,6 +51,20 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.isDeviceConsoleLinkSelected.fill(false);
       this.isDeviceUiLinkSelected[idx] = true;
       this.subject.emit_deviceSubmenuSelected("localui");
+      let ipAddress: string = "";
+      let port: number = 443;
+
+      if(this.DeviceSerialNoMap.has(serialNumber)) {
+        let device:any = this.DeviceSerialNoMap.get(serialNumber);
+        ipAddress = device.ipAddress;
+      }
+      
+      this.http.redirectToLocalUI(ipAddress, port).subscribe(rsp => {
+          //Redirecting tolocalWeb UI
+      },
+      (error) => {},
+      () => {});
+
     }
 
     ngOnInit(): void {
