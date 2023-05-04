@@ -53,8 +53,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
               {ipAddress: "192.168.0.136", serialNumber: "Q12356", deviceName: "XR80", isDeviceAvailable: true }
             ];*/
 
-            this.http.getDevices().subscribe((rsp: Array<Device>) => {
-              this.subject.emit_deviceList(rsp);
+            this.http.getDevices().subscribe((rsp: string) => {
+              //this.subject.emit_deviceList(rsp);
+              let jsonArray = JSON.parse(rsp);
+              console.log("Value of jsonArray: " + jsonArray);
             },
             (error) => {},
             () => {});

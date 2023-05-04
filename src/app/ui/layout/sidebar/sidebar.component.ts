@@ -59,7 +59,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
         ipAddress = device.ipAddress;
       }
       
-      this.http.redirectToLocalUI(ipAddress, port).subscribe(rsp => {
+      this.http.redirectToLocalUI(ipAddress/*Device's WAN PORT*/, port).subscribe(rsp => {
           //Redirecting tolocalWeb UI
       },
       (error) => {},
@@ -78,13 +78,16 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
       if(!this.devices.length) {
           this.http.getDevices().subscribe(
-              (response: Array<Device>) => {
+              (response: string) => {
+                  let jsonArray = JSON.parse(response);
+                  console.log("Valueof jsonArray: " + jsonArray);
+                  /*
                   response.forEach((ent: Device) => {
                       this.DeviceSerialNoMap.set(ent.serialNumber, ent);
-                  });
+                  });*/
                   
                   //Publish the devices list 
-                  this.subject.emit_deviceList(response);
+                  //this.subject.emit_deviceList(response);
               },
           (error) => {this.DeviceSerialNoMap.clear();},
 

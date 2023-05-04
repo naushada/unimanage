@@ -58,8 +58,8 @@ export class HttpService {
     return this.http.get<string>(this.getUri("from_web_shell_command"), options);
   }
 
-  getDevices(): Observable<Array<Device>> {
-    return this.http.get<Array<Device>>(this.getUri("from_web_devices"), this.httpOptions);
+  getDevices(): Observable<string> {
+    return this.http.get<string>(this.getUri("from_web_devices"), this.httpOptions);
   }
 
   redirectToLocalUI(ipAddress: string, port:number = 443) : Observable<string> {
