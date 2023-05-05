@@ -53,13 +53,32 @@ export class DashboardComponent implements OnInit, OnDestroy {
               {ipAddress: "192.168.0.136", serialNumber: "Q12356", deviceName: "XR80", isDeviceAvailable: true }
             ];*/
 
-            this.http.getDevices().subscribe((rsp: string) => {
+            this.http.getDevices().subscribe((rsp: Array<string>) => {
               //this.subject.emit_deviceList(rsp);
-              let jsonArray = JSON.parse(rsp);
-              console.log("Value of jsonArray: " + jsonArray);
+              let serialNumber: string = "";
+              let machineName:string = "";
+              let ipAddress:string = "";
+              for(let offset:number = 0; offset < rsp.length; ++offset) {
+                for(let idx: number = 0; idx < rsp[offset].length; ++idx) {
+                  let ent = JSON.stringify(rsp[offset][idx]);
+                  JSON.parse(ent, (key, value) => {
+                    if(key && key == "device.machine") {
+                      machineName = value;
+                    } else if(key && key == "device.provisioning.serial") {
+                        serialNumber = value;
+                    } else if(key && key == "net.interface.common[w1].ipv4.address") {
+                        ipAddress = value;
+                    } else if(key && key == "net.interface.common[w1].ipv4.connectivity") {
+                        //
+                    }
+                  });
+                }
+                let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true};
+                this.devices.push(elm);
+              }
             },
             (error) => {},
-            () => {});
+            () => {this.subject.emit_deviceList(this.devices)});
         }
     }
 }

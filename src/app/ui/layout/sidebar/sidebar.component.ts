@@ -78,20 +78,35 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
       if(!this.devices.length) {
           this.http.getDevices().subscribe(
-              (response: string) => {
-                  let jsonArray = JSON.parse(response);
-                  console.log("Valueof jsonArray: " + jsonArray);
-                  /*
-                  response.forEach((ent: Device) => {
-                      this.DeviceSerialNoMap.set(ent.serialNumber, ent);
-                  });*/
-                  
-                  //Publish the devices list 
-                  //this.subject.emit_deviceList(response);
-              },
+              (rsp: Array<string>) => {
+                //this.subject.emit_deviceList(rsp);
+              let serialNumber: string = "";
+              let machineName:string = "";
+              let ipAddress:string = "";
+              for(let offset:number = 0; offset < rsp.length; ++offset) {
+                for(let idx: number = 0; idx < rsp[offset].length; ++idx) {
+                  let ent = JSON.stringify(rsp[offset][idx]);
+                  JSON.parse(ent, (key, value) => {
+                    if(key && key == "device.machine") {
+                      machineName = value;
+                    } else if(key && key == "device.provisioning.serial") {
+                        serialNumber = value;
+                    } else if(key && key == "net.interface.common[w1].ipv4.address") {
+                        ipAddress = value;
+                    } else if(key && key == "net.interface.common[w1].ipv4.connectivity") {
+                        //
+                    }
+                  });
+                }
+                let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true};
+                this.devices.push(elm);
+              }
+              let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true};
+              this.devices.push(elm);
+            },
           (error) => {this.DeviceSerialNoMap.clear();},
 
-          () => {});
+          () => {this.subject.emit_deviceList(this.devices);});
       }
     }
 
