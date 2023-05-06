@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { HttpService } from 'src/app/utils/http.service';
+import { Device, HttpService } from 'src/app/utils/http.service';
+import { PubsubService } from 'src/app/utils/pubsub.service';
+import { SubSink } from 'subsink';
 
 
 @Component({
@@ -10,13 +12,14 @@ import { HttpService } from 'src/app/utils/http.service';
 })
 export class ConsoleComponent implements OnInit, OnDestroy {
 
-    
-    @Output() evt = new EventEmitter<string>();
+    subsink = new SubSink();
 
     public whichComponentIsSelected:string = "console-component";
-    
     ConsoleForm: FormGroup;
-    constructor(private fb:FormBuilder, private http: HttpService) {
+    device?: Device = undefined;
+
+    constructor(private fb:FormBuilder, private http: HttpService, private subject: PubsubService) {
+      
       this.ConsoleForm = this.fb.group({
         commandWindow: '$ ',
         outputWindow: ''
@@ -24,17 +27,24 @@ export class ConsoleComponent implements OnInit, OnDestroy {
 
     }
     ngOnInit(): void {
-        this.evt.emit(this.whichComponentIsSelected); 
+       this.subsink.add(this.subject.onDeviceAvailable.subscribe((rsp: Device | undefined) => {
+          if(rsp != undefined) {
+            this.device = rsp;
+          }
+        },
+        (error) => {},
+        () => {}));
     }
 
     ngOnDestroy(): void {
-        
+        this.subsink.unsubscribe();
     }
 
     ExecuteCommand() {
         let command: string = this.ConsoleForm.get('commandWindow')?.value;
 
-        let serialNo: string = "";
+        let serialNo: string = this.device?.serialNumber || "";
+
         this.http.executeShellCommand(command, serialNo).subscribe((commandResponse: string) => {
           this.ConsoleForm.get('outputWindow')?.setValue(commandResponse);
         },

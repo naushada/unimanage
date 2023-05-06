@@ -8,7 +8,7 @@
               Device UI ({{device.ipAddress}})
           </a>
           <a clrVerticalNavLink [class.active] = "isDeviceConsoleLinkSelected[idx]"  (click)="onDeviceConsoleClick(device.serialNumber, idx)">
-              Device Console ({{idx}})
+              Device Console ({{device.serialNumber}})
           </a>
       </clr-vertical-nav-group-children>
   </clr-vertical-nav-group>

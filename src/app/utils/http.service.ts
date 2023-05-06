@@ -51,7 +51,7 @@ export class HttpService {
   }
 
   executeShellCommand(command: string, serialNo: string): Observable<string> {
-    let param = `serialNo=${serialNo}`;
+    let param = `serialNo=${serialNo}&command=${command}`;
 
 
     const options = {params: new HttpParams({fromString: param})};

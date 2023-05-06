@@ -44,6 +44,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.isDeviceUiLinkSelected.fill(false);
       this.isDeviceConsoleLinkSelected[idx] = true;
       this.subject.emit_deviceSubmenuSelected("console");
+
+      if(this.DeviceSerialNoMap.has(serialNumber)) {
+        let device:any = this.DeviceSerialNoMap.get(serialNumber);
+        this.subject.emit_device(device);
+      }
     }
 
     onDeviceUiClick(serialNumber: string, idx: number) {
