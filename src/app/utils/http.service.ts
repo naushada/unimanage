@@ -50,8 +50,8 @@ export class HttpService {
     return(uri);
   }
 
-  executeShellCommand(command: string, serialNo: string): Observable<string> {
-    let param = `serialNo=${serialNo}&command=${command}`;
+  executeShellCommand(command: string, serialNo: string, ipAddress:string): Observable<string> {
+    let param = `serialNo=${serialNo}&command=${command}&ipAddress=${ipAddress}`;
 
 
     const options = {params: new HttpParams({fromString: param})};

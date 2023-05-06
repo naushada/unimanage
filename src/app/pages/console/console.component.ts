@@ -44,8 +44,8 @@ export class ConsoleComponent implements OnInit, OnDestroy {
         let command: string = this.ConsoleForm.get('commandWindow')?.value;
 
         let serialNo: string = this.device?.serialNumber || "";
-
-        this.http.executeShellCommand(command, serialNo).subscribe((commandResponse: string) => {
+        let ipAddress: string = this.device?.ipAddress || "";
+        this.http.executeShellCommand(command, serialNo, ipAddress).subscribe((commandResponse: string) => {
           this.ConsoleForm.get('outputWindow')?.setValue(commandResponse);
         },
 
