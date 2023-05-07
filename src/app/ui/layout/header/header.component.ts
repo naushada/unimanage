@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit,OnDestroy {
 
     constructor(private rt: Router, private subject: PubsubService) {
       this.whichSubnavIsSelected.fill(false);
-      this.whichSubnavIsSelected[1] = true;
+      this.whichSubnavIsSelected[0] = true;
     }
 
     ngOnDestroy(): void {
