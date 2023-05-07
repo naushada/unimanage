@@ -40,27 +40,28 @@ export class ConsoleComponent implements OnInit, OnDestroy {
         this.subsink.unsubscribe();
     }
 
+    /**
+     * @brief
+     * 
+     */
     ExecuteCommand() {
         let command: string = this.ConsoleForm.get('commandWindow')?.value;
 
         let serialNo: string = this.device?.serialNumber || "";
         let ipAddress: string = this.device?.ipAddress || "";
-        this.http.executeShellCommand(command, serialNo, ipAddress).subscribe((commandResponse: string) => {
+        this.http.executeShellCommand(command, serialNo, ipAddress).toPromise()
+        .then((commandResponse) => {
           this.ConsoleForm.get('outputWindow')?.setValue(commandResponse);
-        },
+          let rsp = this.ConsoleForm.get('outputWindow')?.value;
+          rsp = rsp + "\n" + commandResponse;
 
-        (error) => {
-          //Error Response
+          this.ConsoleForm.get('outputWindow')?.setValue(rsp);
+          this.ConsoleForm.get('commandWindow')?.setValue('$ ');
+        })
+        .catch((error) =>  {
           this.ConsoleForm.get('commandWindow')?.setValue('$ ');
           let rsp = this.ConsoleForm.get('outputWindow')?.value;
           this.ConsoleForm.get('outputWindow')?.setValue(rsp + '\nError: ');
-        },
-
-        () => {
-          //successfull Response
-          let rsp = this.ConsoleForm.get('outputWindow')?.value;
-          this.ConsoleForm.get('outputWindow')?.setValue('Error: ' + rsp);
-          this.ConsoleForm.get('commandWindow')?.setValue('$ ');
-        }); 
+        });
     }
 }

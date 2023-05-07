@@ -88,7 +88,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
               let serialNumber: string = "";
               let machineName:string = "";
               let ipAddress:string = "";
+
               for(let offset:number = 0; offset < rsp.length; ++offset) {
+
                 for(let idx: number = 0; idx < rsp[offset].length; ++idx) {
                   let ent = JSON.stringify(rsp[offset][idx]);
                   JSON.parse(ent, (key, value) => {
@@ -103,9 +105,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
                     }
                   });
                 }
-                let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true};
-                this.devices.push(elm);
+
+                //let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true};
+                //this.devices.push(elm);
               }
+
               let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true};
               this.devices.push(elm);
             },
