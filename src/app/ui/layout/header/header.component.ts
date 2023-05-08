@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit,OnDestroy {
     }
 
     ngOnInit(): void {
-        
+      this.subject.emit_selectedMenuItem("dashboard");
     }
 
     onDashboardClick(offset: number) {
