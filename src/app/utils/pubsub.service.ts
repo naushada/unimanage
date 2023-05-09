@@ -10,9 +10,12 @@ export class PubsubService {
   private devices?:Array<Device>;
   private device?:Device;
   private menuSelection:string = "";
+  private redirectURL:string = "";
+
   private menuItemSelected$ = new BehaviorSubject(this.menuSelection);
   private deviceList$ = new BehaviorSubject(this.devices);
   private adevice$ = new BehaviorSubject(this.device);
+  private redirectURL$ = new BehaviorSubject(this.redirectURL);
 
   private devicesSubmenuSelection:string = "";
   private devicesSubmenuItemSelected$ = new BehaviorSubject(this.devicesSubmenuSelection);
@@ -24,6 +27,7 @@ export class PubsubService {
   public onMenuItemSelected = this.menuItemSelected$.asObservable();
   public onDevicesAvailable = this.deviceList$.asObservable();
   public onDeviceAvailable = this.adevice$.asObservable();
+  public onRedirectURL = this.redirectURL$.asObservable();
 
   public onDevicesSubmenuItemSelected = this.devicesSubmenuItemSelected$.asObservable();
 
@@ -46,4 +50,11 @@ export class PubsubService {
     this.devicesSubmenuSelection = item;
     this.devicesSubmenuItemSelected$.next(this.devicesSubmenuSelection);
   }
+
+
+  public emit_redirectURL(item:string) {
+    this.redirectURL = item;
+    this.redirectURL$.next(this.redirectURL);
+  }
+
 }

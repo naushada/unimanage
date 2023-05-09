@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Device, HttpService } from 'src/app/utils/http.service';
 import { PubsubService } from 'src/app/utils/pubsub.service';
 import { SubSink } from 'subsink';
@@ -17,7 +18,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   public isDeviceConsoleLinkSelected: Array<boolean> = [false];
   public isDeviceUiLinkSelected: Array<boolean> = [false];
 
-  constructor(private http:HttpService, private subject: PubsubService) {
+  constructor(private http:HttpService, private subject: PubsubService, private rt: Router) {
       this.DeviceSerialNoMap.clear();
       this.isDeviceConsoleLinkSelected.fill(false);
       this.isDeviceUiLinkSelected.fill(false);
@@ -64,12 +65,20 @@ export class SidebarComponent implements OnInit, OnDestroy {
         ipAddress = device.ipAddress;
       }
       
-      this.http.redirectToLocalUI(ipAddress/*Device's WAN PORT*/, port).subscribe(rsp => {
-          //Redirecting tolocalWeb UI
+      let redirectUrl:string = "https://" + ipAddress + ":" + port;
+      this.rt.navigateByUrl(redirectUrl).then(rsp => {
+        if(rsp == false) {
+          alert("Unable to Reach to " + redirectUrl);
+        }
+      }).catch(error => {alert("Exception happened for : "+ redirectUrl)});
+
+      /*
+      this.http.redirectToLocalUI(ipAddress, port).subscribe(rsp => {
+        
       },
       (error) => {},
       () => {});
-
+      */
     }
 
     ngOnInit(): void {
