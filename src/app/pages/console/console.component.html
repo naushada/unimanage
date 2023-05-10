@@ -4,7 +4,7 @@
         <div class="clr-col-lg-auto">
             <clr-textarea-container>
                 <label for="commandWindow">Execute Command</label>
-                <textarea clrTextarea name="commandWindow" formControlName="commandWindow" (keydown.enter) = "ExecuteCommand()" rows="15%" cols="140%"></textarea>
+                <textarea clrTextarea name="commandWindow" formControlName="commandWindow" (keydown.enter) = "ExecuteCommand()" rows="15%" cols="140%" (keyup)="onKey($event)"></textarea>
             </clr-textarea-container>
         </div>
     </div>

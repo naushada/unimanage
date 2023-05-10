@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+
 import { Device, HttpService } from 'src/app/utils/http.service';
 import { PubsubService } from 'src/app/utils/pubsub.service';
 import { SubSink } from 'subsink';
@@ -61,7 +62,13 @@ export class ConsoleComponent implements OnInit, OnDestroy {
         .catch((error) =>  {
           this.ConsoleForm.get('commandWindow')?.setValue('$ ');
           let rsp = this.ConsoleForm.get('outputWindow')?.value;
-          this.ConsoleForm.get('outputWindow')?.setValue(rsp + '\nError: ');
+          this.ConsoleForm.get('outputWindow')?.setValue('Error: ');
         });
+    }
+
+    onKey(events:any) {
+      if(events.key === 'Backspace' && events.target.value === '$') {
+        this.ConsoleForm.get('commandWindow')?.setValue('$ ');
+      }
     }
 }
