@@ -66,11 +66,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
       }
       
       let redirectUrl:string = "https://" + ipAddress + ":" + port;
+      this.subject.emit_redirectURL(redirectUrl);
+      window.location.href = redirectUrl;
+      /*
       this.rt.navigateByUrl(redirectUrl).then(rsp => {
         if(rsp == false) {
           alert("Unable to Reach to " + redirectUrl);
         }
       }).catch(error => {alert("Exception happened for : "+ redirectUrl)});
+      */
 
       /*
       this.http.redirectToLocalUI(ipAddress, port).subscribe(rsp => {
