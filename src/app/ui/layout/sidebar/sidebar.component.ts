@@ -67,7 +67,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
       
       let redirectUrl:string = "https://" + ipAddress + ":" + port;
       this.subject.emit_redirectURL(redirectUrl);
-      window.location.href = redirectUrl;
+      //window.location.href = redirectUrl;
+      window.open(redirectUrl, '_blank');
       /*
       this.rt.navigateByUrl(redirectUrl).then(rsp => {
         if(rsp == false) {
@@ -126,7 +127,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
               let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true};
               this.devices.push(elm);
             },
-          (error) => {this.DeviceSerialNoMap.clear();},
+          (error) => {this.DeviceSerialNoMap.clear(); },
 
           () => {this.subject.emit_deviceList(this.devices);});
       }
