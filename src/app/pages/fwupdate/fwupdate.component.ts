@@ -72,7 +72,14 @@ export class FwupdateComponent {
       alert("Please choose the firmware to update");
       return;
     }
-    alert("Chosen File is: " + fwFile);
+
+    const formData = new FormData();
+    formData.append('uploadManifest', this.manifestFileBlob, 'manifest');
+
+    if(this.installerFileBlob) {
+      formData.append('uploadInstaller', this.installerFileBlob, 'installer');
+    }
+    
   }
 
   onSelectionChanged(event:any) {
