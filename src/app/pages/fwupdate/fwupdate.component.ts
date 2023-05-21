@@ -32,7 +32,9 @@ export class FwupdateComponent {
 
     () => {}));
     
-    this.fwUpdateForm = this.fb.group({});
+    this.fwUpdateForm = this.fb.group({
+      fwFileName: ''
+    });
   }
 
   onChange(event:any) {
@@ -40,11 +42,26 @@ export class FwupdateComponent {
   }
 
   onFWFileSelect(event:any) {
+    let fwFile = event.target.files[0];
+    const fileReader = new FileReader();
+    fileReader.readAsBinaryString(event.target.files[0]);
 
+    /** This is lamda Funtion = anonymous function */
+    fileReader.onload = (event) => {
+      let binaryData = event.target?.result;
+      console.log("binary data: " + binaryData);
+    }
+    fileReader.onloadend = (event) => {}
+    fileReader.onerror = (event) => {}
   }
 
   onFWUpdateClicked() {
-
+    let fwFile = this.fwUpdateForm.get('fwFileName')?.value;
+    if(!fwFile.length) {
+      alert("Please choose the firmware to update");
+      return;
+    }
+    alert("Chosen File is: " + fwFile);
   }
 
   onSelectionChanged(event:any) {
