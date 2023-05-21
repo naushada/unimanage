@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Device, HttpService } from 'src/app/utils/http.service';
 import { PubsubService } from 'src/app/utils/pubsub.service';
 import { SubSink } from 'subsink';
+import * as Tar from 'src/app/utils/tar';
+import handleSendFirmware from "src/app/utils/swupdate"
 
 @Component({
   selector: 'app-fwupdate',
@@ -10,6 +12,9 @@ import { SubSink } from 'subsink';
   styleUrls: ['./fwupdate.component.scss']
 })
 export class FwupdateComponent {
+
+  manifestFileBlob:any;
+  installerFileBlob:any;
 
   rowsSelected?:Array<Device> = [];
   devices: Array<Device> = [];
@@ -43,16 +48,22 @@ export class FwupdateComponent {
 
   onFWFileSelect(event:any) {
     let fwFile = event.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.readAsBinaryString(event.target.files[0]);
 
-    /** This is lamda Funtion = anonymous function */
-    fileReader.onload = (event) => {
-      let binaryData = event.target?.result;
-      console.log("binary data: " + binaryData);
+    let filesIndexes = Tar.getFilesIndexes(event.target.files[0]);
+    //extracting manifest file.
+    if(filesIndexes['manifest']) {
+      const manifestFileBlobStart = filesIndexes['manifest'].tarStart + Tar.HEADER_SIZE;
+      const manifestFileBlobEnd = manifestFileBlobStart + filesIndexes['manifest'].fileSize;
+      this.manifestFileBlob = fwFile.slice(manifestFileBlobStart, manifestFileBlobEnd);
+
+      
+      if (filesIndexes['installer']) {
+        //extracting installer file.
+        const installerFileBlobStart = filesIndexes['installer'].tarStart + Tar.HEADER_SIZE;
+        const installerFileBlobEnd = installerFileBlobStart + filesIndexes['installer'].fileSize;
+        this.installerFileBlob = fwFile.slice(installerFileBlobStart, installerFileBlobEnd);
+      }
     }
-    fileReader.onloadend = (event) => {}
-    fileReader.onerror = (event) => {}
   }
 
   onFWUpdateClicked() {
