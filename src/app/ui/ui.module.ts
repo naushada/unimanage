@@ -15,7 +15,6 @@ import { ConsoleComponent } from '../pages/console/console.component';
 import { LocaluiComponent } from '../pages/localui/localui.component';
 import { BulkOperationsComponent } from '../pages/bulk-operations/bulk-operations.component';
 
-import { CdsModule } from '@cds/angular';
 import { FwupdateComponent } from '../pages/fwupdate/fwupdate.component';
 import { ApplyTemplatesComponent } from '../pages/apply-templates/apply-templates.component';
 
@@ -43,7 +42,6 @@ import { ApplyTemplatesComponent } from '../pages/apply-templates/apply-template
     RouterModule,
     ReactiveFormsModule,
     HttpClientModule,
-    CdsModule
   ],
   exports: [
     LayoutComponent,
