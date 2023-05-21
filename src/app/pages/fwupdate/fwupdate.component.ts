@@ -68,18 +68,32 @@ export class FwupdateComponent {
 
   onFWUpdateClicked() {
     let fwFile = this.fwUpdateForm.get('fwFileName')?.value;
+
     if(!fwFile.length) {
       alert("Please choose the firmware to update");
       return;
     }
 
-    const formData = new FormData();
-    formData.append('uploadManifest', this.manifestFileBlob, 'manifest');
+    if(this.manifestFileBlob) {
+      const formData = new FormData();
+      formData.append('uploadManifest', this.manifestFileBlob, 'manifest');
 
-    if(this.installerFileBlob) {
-      formData.append('uploadInstaller', this.installerFileBlob, 'installer');
+      if(this.installerFileBlob) {
+        formData.append('uploadInstaller', this.installerFileBlob, 'installer');
+      }
+
+      this.rowsSelected?.forEach((ent: Device) => {
+        let IP: string = ent.ipAddress;
+        let PORT: string = "443";
+        console.log("IP Address: " + IP);
+        
+        this.http.manifestUpdate(IP, PORT, formData).subscribe((rsp:any) => {
+          alert("Response: " + JSON.stringify(rsp));
+        },
+        (error) => {},
+        () => {});
+      });
     }
-    
   }
 
   onSelectionChanged(event:any) {

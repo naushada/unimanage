@@ -18,9 +18,11 @@ export interface Device {
 export class HttpService {
     
     public UriMap = new Map<string, string>([
-        ["from_web_shell_command",         "/api/v1/shell/command"],
-        ["from_web_devices",               "/api/v1/device/list"],
-        ["from_web_device_ui",             "/api/v1/device/ui"]
+        ["from_web_shell_command",                "/api/v1/shell/command"],
+        ["from_web_devices",                      "/api/v1/device/list"],
+        ["from_web_device_ui",                    "/api/v1/device/ui"],
+        ["from_web_device_swupdate_manifest",     "/api/v1/update/manifest"],
+        ["from_web_device_swupdate_installer",    "/api/v1/update/installer"],
     ]);
 
   private apiURL:string = "";
@@ -68,5 +70,19 @@ export class HttpService {
     const options = {params: new HttpParams({fromString: param}),
                      headers: new HttpHeaders({'Content-Type': 'application/json'})};
     return this.http.get<string>(this.getUri("from_web_device_ui"), options);
+  }
+
+  manifestUpdate(deviceIp: string, port: string, formData: FormData) : Observable<any> {
+    let param = `ipAddress=${deviceIp}&port=${port}`;
+
+    const options = {
+                      params: new HttpParams({fromString: param}),
+                      //headers: new HttpHeaders({'Content-Type': 'application/json'}),
+                      body: formData
+                    };
+    //return this.http.post<string>(this.getUri("from_web_device_swupdate_manifest"), options);
+    let URI: string = "https://";
+    URI = URI + deviceIp + ":" + port + this.getUri("from_web_device_swupdate_manifest");
+    return this.http.post<string>(URI, options);
   }
 }
