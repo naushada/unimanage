@@ -42,4 +42,11 @@ export class HeaderComponent implements OnInit,OnDestroy {
       //this.rt.navigateByUrl('/reports');
     }
 
+    onBulkOperationsClick(offset: number) {
+      this.whichSubnavIsSelected.fill(false);
+      this.whichSubnavIsSelected[offset] = true;
+      this.subject.emit_selectedMenuItem("bulkOperations");
+      //this.rt.navigateByUrl('/reports');
+    }
+
 }

@@ -13,6 +13,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ConsoleComponent } from '../pages/console/console.component';
 import { LocaluiComponent } from '../pages/localui/localui.component';
+import { BulkOperationsComponent } from '../pages/bulk-operations/bulk-operations.component';
+
+import { CdsModule } from '@cds/angular';
+import { FwupdateComponent } from '../pages/fwupdate/fwupdate.component';
+import { ApplyTemplatesComponent } from '../pages/apply-templates/apply-templates.component';
+
 
 
 
@@ -25,7 +31,10 @@ import { LocaluiComponent } from '../pages/localui/localui.component';
     DashboardComponent,
     ConsoleComponent,
     ReportsComponent,
-    LocaluiComponent
+    LocaluiComponent,
+    BulkOperationsComponent,
+    FwupdateComponent,
+    ApplyTemplatesComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +42,8 @@ import { LocaluiComponent } from '../pages/localui/localui.component';
     BrowserAnimationsModule,
     RouterModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CdsModule
   ],
   exports: [
     LayoutComponent,

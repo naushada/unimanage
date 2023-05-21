@@ -1,0 +1,11 @@
+<clr-vertical-nav [clrVerticalNavCollapsible]="true">
+    <a clrVerticalNavLink [class.active] = "isFWUpdateCliecked" (click)="onFirmwareUpdate()">
+        <clr-icon shape="upload" clrVerticalNavIcon></clr-icon>
+            Software Update
+    </a>
+        
+    <a clrVerticalNavLink [class.active] = "isApplyTemplateClicked" (click)="onApplyTemplate()">
+        <clr-icon shape="highlighter" clrVerticalNavIcon></clr-icon>
+            Apply Template
+    </a>
+</clr-vertical-nav>

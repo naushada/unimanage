@@ -9,6 +9,9 @@ import { UiModule } from './ui/ui.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { CdsModule } from '@cds/angular';
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -19,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     ClarityModule,
     UiModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CdsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
