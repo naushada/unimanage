@@ -40,18 +40,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
             //Get Device List as it's not available with us now.
             if(!environment.production)
                 this.devices = [
-                    {ipAddress: "192.168.0.125", serialNumber: "Q12345", deviceName: "XR80", isDeviceAvailable: true },
-                    {ipAddress: "192.168.0.126", serialNumber: "Q12346", deviceName: "XR80", isDeviceAvailable: true },
-                    {ipAddress: "192.168.0.127", serialNumber: "Q12347", deviceName: "XR80", isDeviceAvailable: true },
-                    {ipAddress: "192.168.0.128", serialNumber: "Q12348", deviceName: "XR80", isDeviceAvailable: true },
-                    {ipAddress: "192.168.0.129", serialNumber: "Q12349", deviceName: "XR80", isDeviceAvailable: true },
-                    {ipAddress: "192.168.0.130", serialNumber: "Q12350", deviceName: "XR80", isDeviceAvailable: true },
-                    {ipAddress: "192.168.0.131", serialNumber: "Q12351", deviceName: "XR80", isDeviceAvailable: true },
-                    {ipAddress: "192.168.0.132", serialNumber: "Q12352", deviceName: "XR80", isDeviceAvailable: true },
-                    {ipAddress: "192.168.0.133", serialNumber: "Q12353", deviceName: "XR80", isDeviceAvailable: true },
-                    {ipAddress: "192.168.0.134", serialNumber: "Q12354", deviceName: "XR80", isDeviceAvailable: true },
-                    {ipAddress: "192.168.0.135", serialNumber: "Q12355", deviceName: "XR80", isDeviceAvailable: true },
-                    {ipAddress: "192.168.0.136", serialNumber: "Q12356", deviceName: "XR80", isDeviceAvailable: true }
+                    {ipAddress: "192.168.0.125", serialNumber: "Q12345", deviceName: "lexus-medium", isDeviceAvailable: true , productName: "XR80"},
+                    {ipAddress: "192.168.0.126", serialNumber: "Q12346", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
+                    {ipAddress: "192.168.0.127", serialNumber: "Q12347", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
+                    {ipAddress: "192.168.0.128", serialNumber: "Q12348", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
+                    {ipAddress: "192.168.0.129", serialNumber: "Q12349", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
+                    {ipAddress: "192.168.0.130", serialNumber: "Q12350", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
+                    {ipAddress: "192.168.0.131", serialNumber: "Q12351", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
+                    {ipAddress: "192.168.0.132", serialNumber: "Q12352", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
+                    {ipAddress: "192.168.0.133", serialNumber: "Q12353", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
+                    {ipAddress: "192.168.0.134", serialNumber: "Q12354", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
+                    {ipAddress: "192.168.0.135", serialNumber: "Q12355", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
+                    {ipAddress: "192.168.0.136", serialNumber: "Q12356", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" }
                 ];
 
                 this.subject.emit_deviceList(this.devices);
@@ -61,6 +61,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
                   let serialNumber: string = "";
                   let machineName:string = "";
                   let ipAddress:string = "";
+                  let productName:string = "";
+
                   for(let offset:number = 0; offset < rsp.length; ++offset) {
                     for(let idx: number = 0; idx < rsp[offset].length; ++idx) {
                       let ent = JSON.stringify(rsp[offset][idx]);
@@ -73,10 +75,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
                               ipAddress = value;
                           } else if(key && key == "net.interface.common[w1].ipv4.connectivity") {
                               //
+                         } else if(key && key == "device.product") {
+                             productName = value;
                          }
                       });
                     }
-                    let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true};
+                    let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true, "productName": productName};
                     this.devices.push(elm);
                   }
                 },

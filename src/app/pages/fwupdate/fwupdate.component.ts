@@ -15,7 +15,7 @@ export class FwupdateComponent {
 
   manifestFileBlob:any;
   installerFileBlob:any;
-
+  isFwParsed:boolean = true;
   rowsSelected?:Array<Device> = [];
   devices: Array<Device> = [];
   
@@ -46,26 +46,34 @@ export class FwupdateComponent {
 
   }
 
-  onFWFileSelect(event:any) {
-    let fwFile = event.target.files[0];
-
-    let filesIndexes = Tar.getFilesIndexes(event.target.files[0]);
-    //extracting manifest file.
-    if(filesIndexes['manifest']) {
-      const manifestFileBlobStart = filesIndexes['manifest'].tarStart + Tar.HEADER_SIZE;
-      const manifestFileBlobEnd = manifestFileBlobStart + filesIndexes['manifest'].fileSize;
-      this.manifestFileBlob = fwFile.slice(manifestFileBlobStart, manifestFileBlobEnd);
-
-      
-      if (filesIndexes['installer']) {
-        //extracting installer file.
-        const installerFileBlobStart = filesIndexes['installer'].tarStart + Tar.HEADER_SIZE;
-        const installerFileBlobEnd = installerFileBlobStart + filesIndexes['installer'].fileSize;
-        this.installerFileBlob = fwFile.slice(installerFileBlobStart, installerFileBlobEnd);
-      }
-    }
+async onFWFileSelect(fileObj: any) {
+    //let fwFile = event.target.files[0];
+    let fwFile = this.fwUpdateForm.get('fwFileName')?.value;
+    let filesIndexes = await Tar.getFilesIndexes(fileObj);
+    return filesIndexes;
   }
 
+  processOnFWSelect(event:any) {
+      let fwFile = event.target.files[0];
+      this.onFWFileSelect(event.target.files[0]).then(fwUpdateContents => {
+        if(fwUpdateContents['manifest']) {
+            const manifestFileBlobStart = fwUpdateContents["manifest"].tarStart + Tar.HEADER_SIZE;
+            const manifestFileBlobEnd = manifestFileBlobStart + fwUpdateContents["manifest"].fileSize;
+            this.manifestFileBlob = fwFile.slice(manifestFileBlobStart, manifestFileBlobEnd);
+
+      //     console.log("manifest blob: " + this.manifestFileBlob);
+            if(fwUpdateContents['installer']) {
+      //        //extracting installer file.
+                const installerFileBlobStart = fwUpdateContents['installer'].tarStart + Tar.HEADER_SIZE;
+                const installerFileBlobEnd = installerFileBlobStart + fwUpdateContents['installer'].fileSize;
+                this.installerFileBlob = fwFile.slice(installerFileBlobStart, installerFileBlobEnd);
+                console.log(this.installerFileBlob);
+                this.isFwParsed = false;
+            }
+        }
+    });
+  }
+  
   onFWUpdateClicked() {
     let fwFile = this.fwUpdateForm.get('fwFileName')?.value;
 
@@ -75,9 +83,11 @@ export class FwupdateComponent {
     }
 
     if(this.manifestFileBlob) {
+      console.log(this.manifestFileBlob);
       const formData = new FormData();
       formData.append('uploadManifest', this.manifestFileBlob, 'manifest');
 
+      
       if(this.installerFileBlob) {
         formData.append('uploadInstaller', this.installerFileBlob, 'installer');
       }

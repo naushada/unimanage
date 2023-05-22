@@ -102,7 +102,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
               let serialNumber: string = "";
               let machineName:string = "";
               let ipAddress:string = "";
-
+              let productName: string = "";
               for(let offset:number = 0; offset < rsp.length; ++offset) {
 
                 for(let idx: number = 0; idx < rsp[offset].length; ++idx) {
@@ -116,6 +116,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
                         ipAddress = value;
                     } else if(key && key == "net.interface.common[w1].ipv4.connectivity") {
                         //
+                    } else if(key && key == "device.product") {
+                        productName = value;
                     }
                   });
                 }
@@ -124,7 +126,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
                 //this.devices.push(elm);
               }
 
-              let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true};
+              let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true, "productName": productName};
               this.devices.push(elm);
             },
           (error) => {this.DeviceSerialNoMap.clear(); },

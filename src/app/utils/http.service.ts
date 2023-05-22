@@ -9,6 +9,7 @@ export interface Device {
   ipAddress: string;
   serialNumber: string;
   deviceName: string;
+  productName: string;
   isDeviceAvailable: boolean;
 };
 
@@ -74,15 +75,9 @@ export class HttpService {
 
   manifestUpdate(deviceIp: string, port: string, formData: FormData) : Observable<any> {
     let param = `ipAddress=${deviceIp}&port=${port}`;
-
-    const options = {
-                      params: new HttpParams({fromString: param}),
-                      //headers: new HttpHeaders({'Content-Type': 'application/json'}),
-                      body: formData
-                    };
     //return this.http.post<string>(this.getUri("from_web_device_swupdate_manifest"), options);
-    let URI: string = "https://";
-    URI = URI + deviceIp + ":" + port + this.getUri("from_web_device_swupdate_manifest");
-    return this.http.post<string>(URI, options);
+    let URI: string = "";
+    URI = "http://" + deviceIp + ":" + port + this.getUri("from_web_device_swupdate_manifest");
+    return this.http.post<string>(URI,formData);
   }
 }

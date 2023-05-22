@@ -4,7 +4,7 @@
         <div class="clr-col-lg-auto">
             <clr-input-container>
                 <label>Select firmware to update</label>
-                <input type="file" clrInput class="inputfile" name="fwFileName" formControlName="fwFileName" (change)="onFWFileSelect($event)" accept=".ufw,.*" >
+                <input type="file" clrInput name="fwFileName" formControlName="fwFileName" (change)="processOnFWSelect($event)" accept=".ufw,.*" >
             </clr-input-container>
         </div>
 
@@ -12,7 +12,7 @@
     
     <div class="clr-row">
         <div class="clr-col">
-            <button class="btn btn-primary" (click)="onFWUpdateClicked()">Start Firmware Update</button>
+            <button class="btn btn-primary" (click)="onFWUpdateClicked()" [disabled]="isFwParsed">Start Firmware Update</button>
         </div>
     </div>
 
@@ -32,7 +32,7 @@
     <clr-dg-row *clrDgItems="let device of devices; let idx = index" [clrDgItem]="device">
         
         <clr-dg-cell>{{idx + 1}}</clr-dg-cell>
-        <clr-dg-cell>{{device.deviceName}}</clr-dg-cell>
+        <clr-dg-cell>{{device.productName}}</clr-dg-cell>
         <clr-dg-cell>{{device.serialNumber}}</clr-dg-cell>
         <clr-dg-cell>{{device.ipAddress}}</clr-dg-cell>
         <!-- OS Version-->
