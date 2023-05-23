@@ -40,18 +40,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             //Get Device List as it's not available with us now.
             if(!environment.production)
                 this.devices = [
-                    {ipAddress: "192.168.0.125", serialNumber: "Q12345", deviceName: "lexus-medium", isDeviceAvailable: true , productName: "XR80"},
-                    {ipAddress: "192.168.0.126", serialNumber: "Q12346", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
-                    {ipAddress: "192.168.0.127", serialNumber: "Q12347", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
-                    {ipAddress: "192.168.0.128", serialNumber: "Q12348", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
-                    {ipAddress: "192.168.0.129", serialNumber: "Q12349", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
-                    {ipAddress: "192.168.0.130", serialNumber: "Q12350", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
-                    {ipAddress: "192.168.0.131", serialNumber: "Q12351", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
-                    {ipAddress: "192.168.0.132", serialNumber: "Q12352", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
-                    {ipAddress: "192.168.0.133", serialNumber: "Q12353", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
-                    {ipAddress: "192.168.0.134", serialNumber: "Q12354", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
-                    {ipAddress: "192.168.0.135", serialNumber: "Q12355", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" },
-                    {ipAddress: "192.168.0.136", serialNumber: "Q12356", deviceName: "lexus-medium", isDeviceAvailable: true, productName: "XR80" }
+                    
                 ];
 
                 this.subject.emit_deviceList(this.devices);
@@ -62,6 +51,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
                   let machineName:string = "";
                   let ipAddress:string = "";
                   let productName:string = "";
+                  let osVersion:string = "";
+                  let osBuildnumber:string = "";
+                  let osName:string = "";
 
                   for(let offset:number = 0; offset < rsp.length; ++offset) {
                     for(let idx: number = 0; idx < rsp[offset].length; ++idx) {
@@ -77,10 +69,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
                               //
                          } else if(key && key == "device.product") {
                              productName = value;
+                         } else if(key && key == "system.os.version") {
+                             osVersion = value;
+                         } else if(key && key == "system.os.name") {
+                             osName = value;
+                         } else if(key && key == "system.os.buildnumber") {
+                             osBuildnumber = value;
                          }
                       });
                     }
-                    let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true, "productName": productName};
+                    let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true, 
+                               "productName": productName, "osVersion": osVersion, "osBuildnumber": osBuildnumber, "osName": osName 
+                              };
                     this.devices.push(elm);
                   }
                 },

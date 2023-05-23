@@ -11,6 +11,10 @@ export interface Device {
   deviceName: string;
   productName: string;
   isDeviceAvailable: boolean;
+  osVersion: string;
+  osBuildnumber: string;
+  osName: string;
+  
 };
 
 @Injectable({

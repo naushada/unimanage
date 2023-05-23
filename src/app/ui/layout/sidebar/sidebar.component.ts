@@ -103,6 +103,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
               let machineName:string = "";
               let ipAddress:string = "";
               let productName: string = "";
+              let osVersion:string = "";
+              let osBuildnumber:string = "";
+              let osName:string = "";
+
               for(let offset:number = 0; offset < rsp.length; ++offset) {
 
                 for(let idx: number = 0; idx < rsp[offset].length; ++idx) {
@@ -118,6 +122,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
                         //
                     } else if(key && key == "device.product") {
                         productName = value;
+                    } else if(key && key == "system.os.version") {
+                        osVersion = value;
+                    } else if(key && key == "system.os.name") {
+                        osName = value;
+                    } else if(key && key == "system.os.buildnumber") {
+                        osBuildnumber = value;
                     }
                   });
                 }
@@ -126,7 +136,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
                 //this.devices.push(elm);
               }
 
-              let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true, "productName": productName};
+              let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true, "productName": productName,
+                         "osVersion": osVersion, "osBuildnumber": osBuildnumber, "osName": osName 
+                        };
               this.devices.push(elm);
             },
           (error) => {this.DeviceSerialNoMap.clear(); },
