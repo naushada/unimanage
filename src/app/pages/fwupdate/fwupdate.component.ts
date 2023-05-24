@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Device, HttpService } from 'src/app/utils/http.service';
 import { PubsubService } from 'src/app/utils/pubsub.service';
 import { SubSink } from 'subsink';
 import * as Tar from 'src/app/utils/tar';
 import handleSendFirmware from "src/app/utils/swupdate"
+import { concatMap } from 'rxjs';
 
 @Component({
   selector: 'app-fwupdate',
   templateUrl: './fwupdate.component.html',
   styleUrls: ['./fwupdate.component.scss']
 })
-export class FwupdateComponent {
+export class FwupdateComponent implements OnInit, OnDestroy {
 
   manifestFileBlob:any;
   installerFileBlob:any;
@@ -96,17 +97,24 @@ async onFWFileSelect(fileObj: any) {
         let IP: string = ent.ipAddress;
         let PORT: string = "443";
         console.log("IP Address: " + IP);
-        
-        this.http.manifestUpdate(IP, PORT, formData).subscribe((rsp:any) => {
-          alert("Response: " + JSON.stringify(rsp));
-        },
-        (error) => {},
-        () => {});
+        // we need to login first
+        this.http.authorization(IP, PORT, "admin").pipe(
+          concatMap((rsp: any) => this.http.toeks(IP, PORT, "admin", "")),
+          concatMap((rsp: any) => this.http.manifestUpdate(IP, PORT, formData))
+        ).subscribe(success => {}, error => {});
       });
     }
   }
 
   onSelectionChanged(event:any) {
 
+
+  }
+  ngOnInit(): void {
+      
+  }
+
+  ngOnDestroy(): void {
+      
   }
 }

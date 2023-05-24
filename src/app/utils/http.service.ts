@@ -28,13 +28,16 @@ export class HttpService {
         ["from_web_device_ui",                    "/api/v1/device/ui"],
         ["from_web_device_swupdate_manifest",     "/api/v1/update/manifest"],
         ["from_web_device_swupdate_installer",    "/api/v1/update/installer"],
+        ["from_web_device_authorization",    "/api/v1/auth/authorization"],
+        ["from_web_device_tokens",    "/api/v1/auth/tokens"],
     ]);
 
   private apiURL:string = "";
   constructor(private http: HttpClient) {
 
     if(!environment.production) {
-      this.apiURL = "http://192.168.0.140:58989"; 
+      //this.apiURL = "http://192.168.0.140:58989"; 
+      this.apiURL = "http://localhost:58989"; 
     }
    }
   
@@ -81,7 +84,27 @@ export class HttpService {
     let param = `ipAddress=${deviceIp}&port=${port}`;
     //return this.http.post<string>(this.getUri("from_web_device_swupdate_manifest"), options);
     let URI: string = "";
-    URI = "http://" + deviceIp + ":" + port + this.getUri("from_web_device_swupdate_manifest");
+    //URI = "http://" + deviceIp + ":" + port + this.getUri("from_web_device_swupdate_manifest");
+    URI = "https://" + deviceIp + this.getUri("from_web_device_swupdate_manifest");
     return this.http.post<string>(URI,formData);
+  }
+
+  authorization(deviceIp: string, port: string, userID: string) : Observable<any> {
+    let param = `ipAddress=${deviceIp}&port=${port}`;
+    //return this.http.post<string>(this.getUri("from_web_device_swupdate_manifest"), options);
+    let URI: string = "";
+    //URI = "http://" + deviceIp + ":" + port + this.getUri("from_web_device_authorization") + "/" + userID;
+    URI = "http://" + deviceIp + this.getUri("from_web_device_authorization") + "/" + userID;
+    return this.http.get<string>(URI);
+  }
+
+  toeks(deviceIp: string, port: string, userID: string, password: string) : Observable<any> {
+    let param = `ipAddress=${deviceIp}&port=${port}`;
+    //return this.http.post<string>(this.getUri("from_web_device_swupdate_manifest"), options);
+    let URI: string = "";
+    //URI = "http://" + deviceIp + ":" + port + this.getUri("from_web_device_tokens");
+    URI = "http://" + deviceIp + this.getUri("from_web_device_tokens");
+    let body = {"login": userID, "password": password};
+    return this.http.post<string>(URI, JSON.stringify(body));
   }
 }
