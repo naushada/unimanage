@@ -55,8 +55,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
                             machineName = value;
                         } else if(key && key == "device.provisioning.serial") {
                             serialNumber = value;
-                        } else if(key && key == "net.interface.common[w1].ipv4.address") {
+                        } else if(key && ((key === "net.interface.common[w1].ipv4.address") || 
+                                  (key === "net.interface.common[w2].ipv4.address"))) {
                             ipAddress = value;
+                            console.log(ipAddress);
                         } else if(key && key == "net.interface.common[w1].ipv4.connectivity") {
                             //
                         } else if(key && key == "device.product") {

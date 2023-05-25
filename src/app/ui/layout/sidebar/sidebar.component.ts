@@ -116,7 +116,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
                       machineName = value;
                     } else if(key && key == "device.provisioning.serial") {
                         serialNumber = value;
-                    } else if(key && key == "net.interface.common[w1].ipv4.address") {
+                    } else if(key && key == "net.interface.common[w1].ipv4.address" ||
+                              key == "net.interface.common[w2].ipv4.address") {
                         ipAddress = value;
                     } else if(key && key == "net.interface.common[w1].ipv4.connectivity") {
                         //
