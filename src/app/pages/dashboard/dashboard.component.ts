@@ -49,18 +49,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
             for(let offset:number = 0; offset < rsp.length; ++offset) {
                 for(let idx: number = 0; idx < rsp[offset].length; ++idx) {
-                  console.log("Array size: " + rsp[offset].length);
                     let ent = JSON.stringify(rsp[offset][idx]);
                     JSON.parse(ent, (key, value) => {
-                        console.log("key: " + key);
                         if(key && key == "device.machine") {
                             machineName = value;
                         } else if(key && key == "device.provisioning.serial") {
                             serialNumber = value;
-                        } else if(key && ((key === "net.interface.common[w1].ipv4.address") || 
-                                  (key === "net.interface.common[w2].ipv4.address"))) {
+                        } else if(key && (key === "net.interface.common[w1].ipv4.address") && value ) {
                             ipAddress = value;
-                            console.log(ipAddress);
+                        } else if(key && key === "net.interface.common[w2].ipv4.address" && value) {
+                            ipAddress = value;
                         } else if(key && key == "net.interface.common[w1].ipv4.connectivity") {
                             //
                         } else if(key && key == "device.product") {
