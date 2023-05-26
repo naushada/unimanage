@@ -112,12 +112,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
                 for(let idx: number = 0; idx < rsp[offset].length; ++idx) {
                   let ent = JSON.stringify(rsp[offset][idx]);
                   JSON.parse(ent, (key, value) => {
+                    console.log("key: " + key);
                     if(key && key == "device.machine") {
                       machineName = value;
                     } else if(key && key == "device.provisioning.serial") {
                         serialNumber = value;
-                    } else if(key && key == "net.interface.common[w1].ipv4.address" ||
-                              key == "net.interface.common[w2].ipv4.address") {
+                    } else if(key && ((key == "net.interface.common[w1].ipv4.address") ||
+                                      (key == "net.interface.common[w2].ipv4.address"))) {
                         ipAddress = value;
                     } else if(key && key == "net.interface.common[w1].ipv4.connectivity") {
                         //

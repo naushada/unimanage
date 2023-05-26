@@ -49,8 +49,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
             for(let offset:number = 0; offset < rsp.length; ++offset) {
                 for(let idx: number = 0; idx < rsp[offset].length; ++idx) {
+                  console.log("Array size: " + rsp[offset].length);
                     let ent = JSON.stringify(rsp[offset][idx]);
                     JSON.parse(ent, (key, value) => {
+                        console.log("key: " + key);
                         if(key && key == "device.machine") {
                             machineName = value;
                         } else if(key && key == "device.provisioning.serial") {

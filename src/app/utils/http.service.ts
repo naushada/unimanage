@@ -28,8 +28,8 @@ export class HttpService {
         ["from_web_device_ui",                    "/api/v1/device/ui"],
         ["from_web_device_swupdate_manifest",     "/api/v1/update/manifest"],
         ["from_web_device_swupdate_installer",    "/api/v1/update/installer"],
-        ["from_web_device_authorization",    "/api/v1/auth/authorization"],
-        ["from_web_device_tokens",    "/api/v1/auth/tokens"],
+        ["from_web_device_authorization",         "/api/v1/auth/authorization"],
+        ["from_web_device_tokens",                "/api/v1/auth/tokens"],
     ]);
 
   private apiURL:string = "";
