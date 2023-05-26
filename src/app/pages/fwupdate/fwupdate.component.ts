@@ -95,12 +95,14 @@ async onFWFileSelect(fileObj: any) {
 
       this.rowsSelected?.forEach((ent: Device) => {
         let IP: string = ent.ipAddress;
+        let serialNumber: string = ent.serialNumber;
+
         let PORT: string = "443";
         console.log("IP Address: " + IP);
         // we need to login first
-        this.http.authorization(IP, PORT, "admin").pipe(
-          concatMap((rsp: any) => this.http.toeks(IP, PORT, "admin", "")),
-          concatMap((rsp: any) => this.http.manifestUpdate(IP, PORT, formData))
+        this.http.authorization(IP, PORT, serialNumber, "admin").pipe(
+          concatMap((rsp: any) => this.http.toeks(IP, PORT, serialNumber, "admin", "")),
+          concatMap((rsp: any) => this.http.manifestUpdate(IP, PORT, serialNumber, formData))
         ).subscribe(success => {}, error => {});
       });
     }

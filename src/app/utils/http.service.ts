@@ -80,8 +80,8 @@ export class HttpService {
     return this.http.get<string>(this.getUri("from_web_device_ui"), options);
   }
 
-  manifestUpdate(deviceIp: string, port: string, formData: FormData) : Observable<any> {
-    let param = `ipAddress=${deviceIp}&port=${port}`;
+  manifestUpdate(deviceIp: string, port: string, serialNUmber:string, formData: FormData) : Observable<any> {
+    let param = `ipAddress=${deviceIp}&port=${port}&serialNumber=${serialNUmber}`;
     //return this.http.post<string>(this.getUri("from_web_device_swupdate_manifest"), options);
     let URI: string = "";
     //URI = "http://" + deviceIp + ":" + port + this.getUri("from_web_device_swupdate_manifest");
@@ -90,8 +90,8 @@ export class HttpService {
     return this.http.post<string>(URI,formData);
   }
 
-  authorization(deviceIp: string, port: string, userID: string) : Observable<any> {
-    let param = `ipAddress=${deviceIp}&port=${port}`;
+  authorization(deviceIp: string, port: string, serialNUmber:string, userID: string) : Observable<any> {
+    let param = `ipAddress=${deviceIp}&port=${port}&serialNumber=${serialNUmber}`;
     //return this.http.post<string>(this.getUri("from_web_device_swupdate_manifest"), options);
     const options = {params: new HttpParams({fromString: param})};
     let URI: string = "";
@@ -101,8 +101,8 @@ export class HttpService {
     return this.http.get<string>(URI, options);
   }
 
-  toeks(deviceIp: string, port: string, userID: string, password: string) : Observable<any> {
-    let param = `ipAddress=${deviceIp}&port=${port}`;
+  toeks(deviceIp: string, port: string, serialNUmber:string , userID: string, password: string) : Observable<any> {
+    let param = `ipAddress=${deviceIp}&port=${port}&serialNumber=${serialNUmber}`;
     //return this.http.post<string>(this.getUri("from_web_device_swupdate_manifest"), options);
     const options = {params: new HttpParams({fromString: param})};
     let URI: string = "";
