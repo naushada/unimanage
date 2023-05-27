@@ -100,10 +100,12 @@ async onFWFileSelect(fileObj: any) {
         let PORT: string = "443";
         console.log("IP Address: " + IP);
         // we need to login first
+        /*
         this.http.authorization(IP, PORT, serialNumber, "admin").pipe(
           concatMap((rsp: any) => this.http.toeks(IP, PORT, serialNumber, "admin", "")),
           concatMap((rsp: any) => this.http.manifestUpdate(IP, PORT, serialNumber, formData))
-        ).subscribe(success => {}, error => {});
+        ).subscribe(success => {}, error => {});*/
+        this.http.manifestUpdate(IP, PORT, serialNumber, formData).subscribe(rsp => {},(error)=> {}, ()=>{alert("Success");})
       });
     }
   }

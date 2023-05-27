@@ -86,8 +86,9 @@ export class HttpService {
     let URI: string = "";
     //URI = "http://" + deviceIp + ":" + port + this.getUri("from_web_device_swupdate_manifest");
     //URI = "https://" + deviceIp + this.getUri("from_web_device_swupdate_manifest");
+    const options = {params: new HttpParams({fromString: param})};
     URI = this.getUri("from_web_device_swupdate_manifest");
-    return this.http.post<string>(URI,formData);
+    return this.http.post<string>(URI,formData, options);
   }
 
   authorization(deviceIp: string, port: string, serialNUmber:string, userID: string) : Observable<any> {
