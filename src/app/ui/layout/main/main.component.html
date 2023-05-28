@@ -12,7 +12,8 @@
     </ng-container>
 
     <ng-container *ngIf="menuItemSelected === 'bulkOperations'">
-      <app-fwupdate></app-fwupdate>
+      <app-fwupdate *ngIf="bulkoperationsItemSelected === 'fwUpdate'"></app-fwupdate>
+      <app-apply-templates *ngIf="bulkoperationsItemSelected === 'applyTemplate'"></app-apply-templates>
     </ng-container>
   </div>
     

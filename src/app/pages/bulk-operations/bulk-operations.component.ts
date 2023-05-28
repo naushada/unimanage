@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Device } from 'src/app/utils/http.service';
 import { PubsubService } from 'src/app/utils/pubsub.service';
 import { SubSink } from 'subsink';
@@ -8,7 +8,7 @@ import { SubSink } from 'subsink';
   templateUrl: './bulk-operations.component.html',
   styleUrls: ['./bulk-operations.component.scss']
 })
-export class BulkOperationsComponent {
+export class BulkOperationsComponent implements OnInit, OnDestroy {
 
   isFWUpdateCliecked: boolean = true;
   isApplyTemplateClicked: boolean = false;
@@ -38,11 +38,18 @@ export class BulkOperationsComponent {
   onFirmwareUpdate() {
     this.isFWUpdateCliecked = true;
     this.isApplyTemplateClicked = false;
+    this.subject.emit_bulkoperationsSubmenuSelected('fwUpdate');
   }
 
   onApplyTemplate() {
     this.isApplyTemplateClicked = true;
     this.isFWUpdateCliecked = false;
+    this.subject.emit_bulkoperationsSubmenuSelected('applyTemplate');
   }
-
+  ngOnDestroy(): void {
+      this.subsink.unsubscribe();
+  }
+  ngOnInit(): void {
+      this.subject.emit_bulkoperationsSubmenuSelected('fwUpdate');
+  }
 }

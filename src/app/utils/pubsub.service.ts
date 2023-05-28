@@ -11,6 +11,10 @@ export class PubsubService {
   private device?:Device;
   private menuSelection:string = "";
   private redirectURL:string = "";
+  
+  bulkoperationsSubmenuSelection: string = "";
+  private bulkoperationsSubmenuItemSelected$ = new BehaviorSubject(this.bulkoperationsSubmenuSelection);
+  public onBulkoperationsSubmenuItemSelected = this.bulkoperationsSubmenuItemSelected$.asObservable();
 
   private menuItemSelected$ = new BehaviorSubject(this.menuSelection);
   private deviceList$ = new BehaviorSubject(this.devices);
@@ -49,6 +53,12 @@ export class PubsubService {
   public emit_deviceSubmenuSelected(item:string) {
     this.devicesSubmenuSelection = item;
     this.devicesSubmenuItemSelected$.next(this.devicesSubmenuSelection);
+  }
+
+
+  public emit_bulkoperationsSubmenuSelected(item:string) {
+    this.bulkoperationsSubmenuSelection = item;
+    this.bulkoperationsSubmenuItemSelected$.next(this.bulkoperationsSubmenuSelection);
   }
 
 

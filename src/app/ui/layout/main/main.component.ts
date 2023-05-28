@@ -11,6 +11,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
     menuItemSelected:string = "devices";
     devicesItemSelected:string = "console";
+    bulkoperationsItemSelected:string = "fwUpdate";
 
     private subsink = new SubSink();
     constructor(private subject: PubsubService) {}
@@ -28,6 +29,12 @@ export class MainComponent implements OnInit, OnDestroy {
 
         this.subsink.add(this.subject.onDevicesSubmenuItemSelected.subscribe((rsp:string) => {
           this.devicesItemSelected = rsp;
+        },
+        (error) => {},
+        () => {}));
+
+        this.subsink.add(this.subject.onBulkoperationsSubmenuItemSelected.subscribe((rsp:string) => {
+          this.bulkoperationsItemSelected = rsp;
         },
         (error) => {},
         () => {}));

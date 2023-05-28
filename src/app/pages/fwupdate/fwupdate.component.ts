@@ -98,7 +98,7 @@ async onFWFileSelect(fileObj: any) {
         let serialNumber: string = ent.serialNumber;
 
         let PORT: string = "443";
-        console.log("IP Address: " + IP);
+        //console.log("IP Address: " + IP);
         // we need to login first
         /*
         this.http.authorization(IP, PORT, serialNumber, "admin").pipe(
@@ -114,8 +114,9 @@ async onFWFileSelect(fileObj: any) {
 
 
   }
+
   ngOnInit(): void {
-      
+      this.subject.emit_bulkoperationsSubmenuSelected("fwUpdate");
   }
 
   ngOnDestroy(): void {
