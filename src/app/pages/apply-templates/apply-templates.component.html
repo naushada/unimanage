@@ -1,5 +1,5 @@
 
-<form clrForm clrLayout="horizontal" clrLabelSize="4" [formGroup]="applyTemplateForm">
+<form clrForm clrLayout="horizontal" clrLabelSize="5" [formGroup]="applyTemplateForm">
 
     <div class="clr-row">
         <div class="clr-col-lg-auto">
@@ -13,7 +13,7 @@
     
     <div class="clr-row">
         <div class="clr-col">
-            <button class="btn btn-primary" (click)="onApplyTemplateClicked()">Apply Template</button>
+            <button class="btn btn-primary" (click)="onApplyTemplateClicked()" [disabled]="!isConfigLoaded">Apply Template</button>
         </div>
     </div>
 

@@ -30,6 +30,7 @@ export class HttpService {
         ["from_web_device_swupdate_installer",    "/api/v1/update/installer"],
         ["from_web_device_authorization",         "/api/v1/auth/authorization"],
         ["from_web_device_tokens",                "/api/v1/auth/tokens"],
+        ["from_web_device_apply_template",        "/api/v1/template/apply"],
     ]);
 
   private apiURL:string = "";
@@ -107,10 +108,21 @@ export class HttpService {
     //return this.http.post<string>(this.getUri("from_web_device_swupdate_manifest"), options);
     const options = {params: new HttpParams({fromString: param})};
     let URI: string = "";
-    //URI = "http://" + deviceIp + ":" + port + this.getUri("from_web_device_tokens");
-    //URI = "http://" + deviceIp + this.getUri("from_web_device_tokens");
     URI = this.getUri("from_web_device_tokens");
     let body = {"login": userID, "password": password};
     return this.http.post<string>(URI, JSON.stringify(body), options);
+  }
+
+
+  applyTemplate(deviceIp: string, port: string, serialNUmber:string, formData: string) : Observable<any> {
+    let param = `ipAddress=${deviceIp}&port=${port}&serialNumber=${serialNUmber}`;
+    let URI: string = "";
+    const options = {params: new HttpParams({fromString: param})};
+    URI = this.getUri("from_web_device_apply_template");
+    return this.http.post<string>(URI,formData, options);
+  }
+
+  getTemplate(templateFileName: string) : Observable<any> {
+    return(this.http.get<any>(templateFileName));
   }
 }

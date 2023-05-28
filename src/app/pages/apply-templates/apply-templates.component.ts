@@ -13,6 +13,8 @@ export class ApplyTemplatesComponent  implements OnInit, OnDestroy {
 
   rowsSelected?:Array<Device> = [];
   devices: Array<Device> = [];
+  configData:any;
+  isConfigLoaded:boolean = false;
   
   applyTemplateForm: FormGroup;
   subsink = new SubSink();
@@ -45,24 +47,35 @@ export class ApplyTemplatesComponent  implements OnInit, OnDestroy {
   }
 
   processOnTemplateSelect(event:any) {
-    let fwFile = event.target.files[0];
+    let templateFile = event.target.files[0];
+    
+    console.log(event.target);
+    var fileReader = new FileReader();
+    fileReader.readAsBinaryString(event.target.files[0]);
+
+    fileReader.onload = (evt) => {
+      this.configData = evt.target?.result;
+      this.isConfigLoaded = true;
+    };
+
+    fileReader.onerror = (evt) => {
+      console.log("File could not read");
+    }
+
+    
+    //this.http.getTemplate(templateFile).subscribe(rsp => {alert(rsp);}, (error) => {}, () => {})
     
   }
 
 onApplyTemplateClicked() {
-  let fwFile = this.applyTemplateForm.get('templateFileName')?.value;
-
-  if(!fwFile.length) {
-    alert("Please choose the Template to update");
-    return;
-  }
-
+  
   this.rowsSelected?.forEach((ent: Device) => {
       let IP: string = ent.ipAddress;
       let serialNumber: string = ent.serialNumber;
 
       let PORT: string = "443";
-      console.log("IP Address: " + IP);
+      
+      this.http.applyTemplate(IP, PORT, serialNumber, this.configData).subscribe(rsp => {}, (error) => {} , () => {});
       // we need to login first
       /*
       this.http.authorization(IP, PORT, serialNumber, "admin").pipe(
