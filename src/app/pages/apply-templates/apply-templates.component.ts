@@ -15,7 +15,7 @@ export class ApplyTemplatesComponent  implements OnInit, OnDestroy {
   devices: Array<Device> = [];
   configData:any;
   isConfigLoaded:boolean = false;
-  
+  status:string = "status";  
   applyTemplateForm: FormGroup;
   subsink = new SubSink();
 
@@ -56,10 +56,12 @@ export class ApplyTemplatesComponent  implements OnInit, OnDestroy {
     fileReader.onload = (evt) => {
       this.configData = evt.target?.result;
       this.isConfigLoaded = true;
+      this.status = "Teplate Parsed Successfully";
     };
 
     fileReader.onerror = (evt) => {
       console.log("File could not read");
+      this.status = "Template Parsed Failed";
     }
   }
 
@@ -69,8 +71,13 @@ onApplyTemplateClicked() {
       let IP: string = ent.ipAddress;
       let serialNumber: string = ent.serialNumber;
       let PORT: string = "443";
-      
-      this.http.applyTemplate(IP, PORT, serialNumber, this.configData).subscribe(rsp => {}, (error) => {} , () => {});
+      this.status = "Applying Template";
+      this.http.applyTemplate(IP, PORT, serialNumber, this.configData).subscribe(rsp => {
+        this.status = rsp.json()["dtatus"]
+      }, (error) => {
+        this.status = "Applying of template failed";
+        console.log(error);
+      } , () => {});
     });
   }
 

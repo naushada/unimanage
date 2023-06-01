@@ -14,7 +14,7 @@ export interface Device {
   osVersion: string;
   osBuildnumber: string;
   osName: string;
-  
+  signature: string;
 };
 
 @Injectable({

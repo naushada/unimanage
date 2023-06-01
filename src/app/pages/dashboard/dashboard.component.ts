@@ -46,6 +46,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             let osVersion:string = "";
             let osBuildnumber:string = "";
             let osName:string = "";
+            let signature: string = "";
 
             for(let offset:number = 0; offset < rsp.length; ++offset) {
                 for(let idx: number = 0; idx < rsp[offset].length; ++idx) {
@@ -69,11 +70,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
                              osName = value;
                         } else if(key && key == "system.os.buildnumber") {
                              osBuildnumber = value;
+                        } else if(key && key == "system.bootcheck.signature") {
+                            signature = value;
                         }
                     });
                 }
                 let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true, 
-                       "productName": productName, "osVersion": osVersion, "osBuildnumber": osBuildnumber, "osName": osName 
+                       "productName": productName, "osVersion": osVersion, "osBuildnumber": osBuildnumber, "osName": osName, "signature": signature 
                       };
                 this.devices.push(elm);
             }

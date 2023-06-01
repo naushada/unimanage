@@ -106,6 +106,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
               let osVersion:string = "";
               let osBuildnumber:string = "";
               let osName:string = "";
+              let signature: string = "Development";
 
               for(let offset:number = 0; offset < rsp.length; ++offset) {
 
@@ -130,6 +131,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
                         osName = value;
                     } else if(key && key == "system.os.buildnumber") {
                         osBuildnumber = value;
+                    } else if(key && key == "system.bootcheck.signature") {
+                        signature = value;
                     }
                   });
                 }
@@ -139,7 +142,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
               }
 
               let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true, "productName": productName,
-                         "osVersion": osVersion, "osBuildnumber": osBuildnumber, "osName": osName 
+                         "osVersion": osVersion, "osBuildnumber": osBuildnumber, "osName": osName, "signature": signature
                         };
               this.devices.push(elm);
             },
