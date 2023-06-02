@@ -15,6 +15,8 @@ export interface Device {
   osBuildnumber: string;
   osName: string;
   signature: string;
+  //Either Applying Template or SW Update.
+  status:string;
 };
 
 @Injectable({

@@ -76,7 +76,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                     });
                 }
                 let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true, 
-                       "productName": productName, "osVersion": osVersion, "osBuildnumber": osBuildnumber, "osName": osName, "signature": signature 
+                       "productName": productName, "osVersion": osVersion, "osBuildnumber": osBuildnumber, "osName": osName, "signature": signature, "status": "status" 
                       };
                 this.devices.push(elm);
             }
