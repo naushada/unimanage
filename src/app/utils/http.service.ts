@@ -6,17 +6,19 @@ import { environment } from 'src/environments/environment';
 
 
 export interface Device {
+  apn: string;
+  carrier: string;
+  firmwareName:string;
+  imei: string;
   ipAddress: string;
-  serialNumber: string;
-  deviceName: string;
   productName: string;
-  isDeviceAvailable: boolean;
-  osVersion: string;
   osBuildnumber: string;
-  osName: string;
-  signature: string;
-  //Either Applying Template or SW Update.
-  status:string;
+  osVersion: string;
+  serialNumber: string;
+  signalStrength: string;
+  technology: string;
+  status: string; //online/offline
+  lastSeen: Date; //When was it online
 };
 
 @Injectable({

@@ -2,7 +2,7 @@
   <clr-vertical-nav-group routerLinkActive="active" *ngFor="let device of devices; index as idx">
       <a routerLink="./normal" hidden aria-hidden="true"></a>
       <clr-icon shape="router" clrVerticalNavIcon></clr-icon>
-      {{device.deviceName}}({{device.serialNumber}})
+      {{device.technology}}({{device.serialNumber}})
       <clr-vertical-nav-group-children *clrIfExpanded="true" style="cursor: pointer">
           <a clrVerticalNavLink [class.active] = "isDeviceUiLinkSelected[idx]"  (click)="onDeviceUiClick(device.serialNumber, idx)">
               Device UI ({{device.ipAddress}})

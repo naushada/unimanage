@@ -1,7 +1,8 @@
+<!--
 <div class="clr-row" style="margin-left: 10px;">
     <div class="clr-col-xl" *ngFor="let device of devices">
         <div class="card" >
-            <h3 class="card-header">{{device.deviceName}} ({{device.serialNumber}})</h3>
+            <h3 class="card-header">{{device.technology}} ({{device.serialNumber}})</h3>
             <div class="card-block">
                 <div class="card-media-block">
                     <img src="assets/1342082-200.png" class="card-media-image" />
@@ -11,8 +12,8 @@
                     </div>
                 </div>
                 <div class="card-text">
-                    <span> {{device.osName}} | </span>
-                    <!--<span> {{device.ipAddress}} </span>-->
+                    <span> {{device.firmwareName}} | </span>
+                    
                     <span> {{device.osVersion}} | </span>
                     <span> {{device.osBuildnumber}} </span>
                 </div>
@@ -23,4 +24,53 @@
         </div>
     </div>
 </div>
+-->
 
+
+
+
+
+<clr-datagrid  (clrDgSelectedChange)="onSelectionChanged($event)" [(clrDgSelected)]="rowsSelected" style="margin-left: 0.5%;">
+    <clr-dg-column >Status</clr-dg-column>
+    <clr-dg-column >Serial Number</clr-dg-column>
+    <clr-dg-column >IMEI</clr-dg-column>
+    <clr-dg-column >Model(Product Name)</clr-dg-column>
+    <clr-dg-column >Last Communication Date</clr-dg-column>
+    <clr-dg-column >OS Version</clr-dg-column>
+    <clr-dg-column >OS Build Number</clr-dg-column>
+    <clr-dg-column >Firmware</clr-dg-column>
+    <clr-dg-column >Carrier</clr-dg-column>
+    <clr-dg-column >Technology</clr-dg-column>
+    <clr-dg-column >APN</clr-dg-column>
+    <clr-dg-column >Signal Strength</clr-dg-column>
+    <clr-dg-column >WAN IP Address</clr-dg-column>
+    
+    <clr-dg-row *clrDgItems="let device of devices; let idx = index" [clrDgItem]="device">
+        
+        <clr-dg-cell>{{device.status}}</clr-dg-cell>
+        <clr-dg-cell>{{device.serialNumber}}</clr-dg-cell>
+        <clr-dg-cell>{{device.imei}}</clr-dg-cell>
+        <clr-dg-cell>{{device.productName}}</clr-dg-cell>
+        <clr-dg-cell>{{device.lastSeen}}</clr-dg-cell>
+        <!-- OS Version-->
+        <clr-dg-cell>{{device.osVersion}}</clr-dg-cell>
+        <!-- OS Build Number-->
+        <clr-dg-cell>{{device.osBuildnumber}}</clr-dg-cell>
+        <clr-dg-cell>{{device.firmwareName}}</clr-dg-cell>
+        <clr-dg-cell>{{device.carrier}}</clr-dg-cell>
+        <clr-dg-cell>{{device.technology}}</clr-dg-cell>
+        <clr-dg-cell>{{device.apn}}</clr-dg-cell>
+        <clr-dg-cell>{{device.signalStrength}}</clr-dg-cell>
+        <clr-dg-cell>{{device.ipAddress}}</clr-dg-cell>
+        
+    </clr-dg-row>
+
+    <!-- Inside the full datagrid declaration -->
+    <clr-dg-footer>
+      <clr-dg-pagination #pagination [clrDgPageSize]="10">
+        <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Devices per page</clr-dg-page-size>
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+        of {{pagination.totalItems}} devices
+    </clr-dg-pagination>
+</clr-dg-footer>
+</clr-datagrid>

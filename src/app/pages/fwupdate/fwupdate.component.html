@@ -21,30 +21,37 @@
 
 
 <clr-datagrid  (clrDgSelectedChange)="onSelectionChanged($event)" [(clrDgSelected)]="rowsSelected">
-    <clr-dg-column >Sequence Number</clr-dg-column>
-    <clr-dg-column >Product Name</clr-dg-column>
+    <clr-dg-column >Status</clr-dg-column>
     <clr-dg-column >Serial Number</clr-dg-column>
-    <clr-dg-column >WAN IP Address</clr-dg-column>
+    <clr-dg-column >IMEI</clr-dg-column>
+    <clr-dg-column >Model(Product Name)</clr-dg-column>
+    <clr-dg-column >Last Communication Date</clr-dg-column>
     <clr-dg-column >OS Version</clr-dg-column>
     <clr-dg-column >OS Build Number</clr-dg-column>
-    <clr-dg-column >Signature</clr-dg-column>
-    <clr-dg-column >Status</clr-dg-column>
+    <clr-dg-column >Firmware</clr-dg-column>
+    <clr-dg-column >Carrier</clr-dg-column>
+    <clr-dg-column >Technology</clr-dg-column>
+    <clr-dg-column >APN</clr-dg-column>
+    <clr-dg-column >Signal Strength</clr-dg-column>
+    <clr-dg-column >WAN IP Address</clr-dg-column>
     
     <clr-dg-row *clrDgItems="let device of devices; let idx = index" [clrDgItem]="device">
         
-        <clr-dg-cell>{{idx + 1}}</clr-dg-cell>
-        <clr-dg-cell>{{device.productName}}</clr-dg-cell>
+        <clr-dg-cell>{{device.status}}</clr-dg-cell>
         <clr-dg-cell>{{device.serialNumber}}</clr-dg-cell>
-        <clr-dg-cell>{{device.ipAddress}}</clr-dg-cell>
+        <clr-dg-cell>{{device.imei}}</clr-dg-cell>
+        <clr-dg-cell>{{device.productName}}</clr-dg-cell>
+        <clr-dg-cell>{{device.lastSeen}}</clr-dg-cell>
         <!-- OS Version-->
         <clr-dg-cell>{{device.osVersion}}</clr-dg-cell>
         <!-- OS Build Number-->
         <clr-dg-cell>{{device.osBuildnumber}}</clr-dg-cell>
-        <!-- Signature -->
-        <clr-dg-cell>Development</clr-dg-cell>
-        <!-- Status -->
-        <clr-dg-cell>Status</clr-dg-cell>
-
+        <clr-dg-cell>{{device.firmwareName}}</clr-dg-cell>
+        <clr-dg-cell>{{device.carrier}}</clr-dg-cell>
+        <clr-dg-cell>{{device.technology}}</clr-dg-cell>
+        <clr-dg-cell>{{device.apn}}</clr-dg-cell>
+        <clr-dg-cell>{{device.signalStrength}}</clr-dg-cell>
+        <clr-dg-cell>{{device.ipAddress}}</clr-dg-cell>
         
     </clr-dg-row>
 

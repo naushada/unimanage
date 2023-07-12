@@ -87,65 +87,69 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-      /*
-      this.DeviceSerialNoMap.set("Q12345", {ipAddress: "192.168.0.125", serialNumber: "Q12345", deviceName: "XR80", isDeviceAvailable: true });
-      this.DeviceSerialNoMap.set("Q12346", {ipAddress: "192.168.0.126", serialNumber: "Q12346", deviceName: "XR80", isDeviceAvailable: true });
-      this.DeviceSerialNoMap.set("Q12347", {ipAddress: "192.168.0.127", serialNumber: "Q12347", deviceName: "XR80", isDeviceAvailable: true });
-      this.DeviceSerialNoMap.set("Q12348", {ipAddress: "192.168.0.128", serialNumber: "Q12348", deviceName: "XR80", isDeviceAvailable: true });
-      this.DeviceSerialNoMap.set("Q12349", {ipAddress: "192.168.0.129", serialNumber: "Q12349", deviceName: "XR80", isDeviceAvailable: true });
-      */
-
       if(!this.devices.length) {
           this.http.getDevices().subscribe(
               (rsp: Array<string>) => {
-                //this.subject.emit_deviceList(rsp);
-              let serialNumber: string = "";
-              let machineName:string = "";
-              let ipAddress:string = "";
-              let productName: string = "";
-              let osVersion:string = "";
-              let osBuildnumber:string = "";
-              let osName:string = "";
-              let signature: string = "Development";
+              //this.subject.emit_deviceList(rsp);
+            let apn: string = "";
+            let carrier:string = "";
+            let firmwareName:string = "";
+            let imei:string = "";
+            let serialNumber: string = "";
+            let ipAddress:string = "";
+            let productName:string = "";
+            let osVersion:string = "";
+            let osBuildnumber:string = "";
+            let technology:string = "";
+            let signalStrength: string = "";
+            console.log("Received: " + rsp);
 
-              for(let offset:number = 0; offset < rsp.length; ++offset) {
-
-                for(let idx: number = 0; idx < rsp[offset].length; ++idx) {
-                  let ent = JSON.stringify(rsp[offset][idx]);
-                  JSON.parse(ent, (key, value) => {
-                    if(key && key == "device.machine") {
-                      machineName = value;
-                    } else if(key && key == "device.provisioning.serial") {
-                        serialNumber = value;
-                    } else if(key && (key == "net.interface.common[w1].ipv4.address") && value) {
-                        ipAddress = value;
-                    } else if(key && (key == "net.interface.common[w2].ipv4.address") && value) {
-                      ipAddress = value;
-                    } else if(key && key == "net.interface.common[w1].ipv4.connectivity") {
-                        //
-                    } else if(key && key == "device.product") {
-                        productName = value;
-                    } else if(key && key == "system.os.version") {
-                        osVersion = value;
-                    } else if(key && key == "system.os.name") {
-                        osName = value;
-                    } else if(key && key == "system.os.buildnumber") {
-                        osBuildnumber = value;
-                    } else if(key && key == "system.bootcheck.signature") {
-                        signature = value;
+            for(let offset:number = 0; offset < rsp.length; ++offset) {
+                let ent = JSON.stringify(rsp[offset]);
+                console.log("ent: " + ent);
+                JSON.parse(ent, (key, value) => {
+                    if(key && key == "apn") {
+                        apn = value;
+                    } 
+                    if(key && key == "carrier") {
+                        carrier = value;
+                    } 
+                    if(key && (key === "firmwareName") && value ) {
+                        firmwareName = value;
                     }
-                  });
+                    if(key && key === "imei" && value) {
+                        imei = value;
+                    }
+                    if(key && key == "ipAddress") {
+                        ipAddress = value;
+                    }
+                    if(key && key == "model") {
+                        productName = value;
+                    }
+                    if(key && key == "osBuildNumber") {
+                        osBuildnumber = value;
+                    }
+                    if(key && key == "osVersion") {
+                        osVersion = value;
+                    }
+                    if(key && key == "serialNumber") {
+                        serialNumber = value;
+                    }
+                    if(key && key == "signalStrength") {
+                        signalStrength = value;
+                    }
+                    if(key && key == "technology") {
+                        technology = value;
+                    }
+
+                    });
                 }
-
-                //let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true};
-                //this.devices.push(elm);
-              }
-
-              let elm = {"ipAddress" : ipAddress, "serialNumber" : serialNumber, "deviceName" : machineName, "isDeviceAvailable" : true, "productName": productName,
-                         "osVersion": osVersion, "osBuildnumber": osBuildnumber, "osName": osName, "signature": signature, "status": "status"
-                        };
-              this.devices.push(elm);
-            },
+                let elm:Device = {"apn" : apn, "carrier" : carrier, "firmwareName" : firmwareName, "imei" : imei, 
+                       "ipAddress": ipAddress, "productName": productName, "osBuildnumber": osBuildnumber, "osVersion": osVersion, "serialNumber": serialNumber,
+                       "signalStrength": signalStrength, "technology": technology, "status": "online", "lastSeen": new Date()};
+                this.devices.push(elm);
+            
+          },
           (error) => {this.DeviceSerialNoMap.clear(); },
 
           () => {this.subject.emit_deviceList(this.devices);});
