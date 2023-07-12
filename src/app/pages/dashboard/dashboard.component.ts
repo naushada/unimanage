@@ -52,6 +52,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             let signalStrength: string = "";
             console.log("Received: " + rsp);
             let response = JSON.parse(rsp);
+            console.log("Response: " + response);
             for(let offset:number = 0; offset < response["devices"].length; ++offset) {
                 let ent = JSON.stringify(response["devices"].at(offset));
                 console.log("ent: " + ent);
