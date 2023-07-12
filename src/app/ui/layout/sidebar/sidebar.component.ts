@@ -89,7 +89,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
       if(!this.devices.length) {
           this.http.getDevices().subscribe(
-              (rsp: Array<string>) => {
+              (rsp: string) => {
               //this.subject.emit_deviceList(rsp);
             let apn: string = "";
             let carrier:string = "";
@@ -103,9 +103,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
             let technology:string = "";
             let signalStrength: string = "";
             console.log("Received: " + rsp);
-
-            for(let offset:number = 0; offset < rsp.length; ++offset) {
-                let ent = JSON.stringify(rsp[offset]);
+            let response = JSON.parse(rsp);
+            console.log("Response: " + response);
+            for(let offset:number = 0; offset < response["devices"].length; ++offset) {
+                let ent = JSON.stringify(response["devices"].at(offset));
                 console.log("ent: " + ent);
                 JSON.parse(ent, (key, value) => {
                     if(key && key == "apn") {
