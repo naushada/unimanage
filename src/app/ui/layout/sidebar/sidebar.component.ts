@@ -113,8 +113,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
             console.log(response.length);
             console.log(res["devices"].at(0));
             for(let offset:number = 0; offset < res["devices"].length; ++offset) {
-                let ent = JSON.stringify(res["devices"].at(offset));
-                console.log("ent: " + ent);
+                //let ent = JSON.stringify(res["devices"].at(offset));
+                //console.log("ent: " + ent);
+                let ent = res["devices"].at(offset);
                 JSON.parse(ent, (key, value) => {
                     if(key && key == "apn") {
                         apn = value;
