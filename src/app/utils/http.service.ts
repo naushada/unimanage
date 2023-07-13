@@ -18,7 +18,7 @@ export interface Device {
   signalStrength: string;
   technology: string;
   status: string; //online/offline
-  lastSeen: Date; //When was it online
+  lastSeen: string; //When was it online
 };
 
 @Injectable({

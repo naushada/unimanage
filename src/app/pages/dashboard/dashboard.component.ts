@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     rowsSelected?:Array<Device> = [];
     private subsink = new SubSink();
     devices:Array<Device> = [];
-
+    
     constructor(private subject: PubsubService, private http: HttpService) {
 
       this.subsink.add(this.subject.onDevicesAvailable.subscribe((rsp: Array<Device> | undefined) => {
@@ -36,9 +36,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+
         if(!this.devices.length) {
             this.http.getDevices().subscribe((rsp: string) => {
-            //this.subject.emit_deviceList(rsp);
             let apn: string = "";
             let carrier:string = "";
             let firmwareName:string = "";
@@ -50,13 +50,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
             let osBuildnumber:string = "";
             let technology:string = "";
             let signalStrength: string = "";
-            console.log(rsp);
-            console.log(JSON.stringify(rsp));
-            let response = JSON.parse(rsp);
-            console.log(response);
-            for(let offset:number = 0; offset < response["devices"].length; ++offset) {
-                let ent = JSON.stringify(response["devices"].at(offset));
-                console.log("ent: " + ent);
+            let response = JSON.stringify(rsp);
+            let res = JSON.parse(response);
+
+            for(let offset:number = 0; offset < res["devices"].length; ++offset) {
+
+                let ent = res["devices"].at(offset);
                 JSON.parse(ent, (key, value) => {
                     if(key && key == "apn") {
                         apn = value;
@@ -96,7 +95,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 }
                 let elm:Device = {"apn" : apn, "carrier" : carrier, "firmwareName" : firmwareName, "imei" : imei, 
                        "ipAddress": ipAddress, "productName": productName, "osBuildnumber": osBuildnumber, "osVersion": osVersion, "serialNumber": serialNumber,
-                       "signalStrength": signalStrength, "technology": technology, "status": "online", "lastSeen": new Date()};
+                       "signalStrength": signalStrength, "technology": technology, "status": "online", "lastSeen": new Date().toLocaleString()};
                 this.devices.push(elm);
             
           },

@@ -102,19 +102,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
             let osBuildnumber:string = "";
             let technology:string = "";
             let signalStrength: string = "";
-            console.log("rsp: ");
-            console.log(rsp);
-            console.log(JSON.stringify(rsp));
-            //let response = JSON.parse(rsp);
+
             let response = JSON.stringify(rsp);
             let res = JSON.parse(response);
-            console.log(res);
-            console.log(response);
-            console.log(response.length);
-            console.log(res["devices"].at(0));
+
             for(let offset:number = 0; offset < res["devices"].length; ++offset) {
-                //let ent = JSON.stringify(res["devices"].at(offset));
-                //console.log("ent: " + ent);
+
                 let ent = res["devices"].at(offset);
                 JSON.parse(ent, (key, value) => {
                     if(key && key == "apn") {
@@ -155,7 +148,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
                 }
                 let elm:Device = {"apn" : apn, "carrier" : carrier, "firmwareName" : firmwareName, "imei" : imei, 
                        "ipAddress": ipAddress, "productName": productName, "osBuildnumber": osBuildnumber, "osVersion": osVersion, "serialNumber": serialNumber,
-                       "signalStrength": signalStrength, "technology": technology, "status": "online", "lastSeen": new Date()};
+                       "signalStrength": signalStrength, "technology": technology, "status": "online", "lastSeen": new Date().toLocaleString()};
                 this.devices.push(elm);
             
           },
