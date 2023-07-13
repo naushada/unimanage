@@ -51,6 +51,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             let technology:string = "";
             let signalStrength: string = "";
             console.log(rsp);
+            console.log(JSON.stringify(rsp));
             let response = JSON.parse(rsp);
             console.log(response);
             for(let offset:number = 0; offset < response["devices"].length; ++offset) {
