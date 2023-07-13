@@ -102,9 +102,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
             let osBuildnumber:string = "";
             let technology:string = "";
             let signalStrength: string = "";
-            console.log("Received: " + rsp);
+            console.log(rsp);
             let response = JSON.parse(rsp);
-            console.log("Response: " + response);
+            console.log(response);
             for(let offset:number = 0; offset < response["devices"].length; ++offset) {
                 let ent = JSON.stringify(response["devices"].at(offset));
                 console.log("ent: " + ent);
